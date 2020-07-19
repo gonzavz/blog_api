@@ -4,6 +4,6 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/heathcheck', (req, res) => res.json({status: 'OK'}));
+router.get('/healthcheck', (req, res) => res.json({status: 'OK'}));
 
 module.exports = router;

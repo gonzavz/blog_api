@@ -2,8 +2,9 @@
   "name": "blog_api",
   "version": "1.0.0",
   "description": "A really simple blogging platform",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,7 +19,8 @@
   "homepage": "https://github.com/gonzavz/blog_api#readme",
   "devDependencies": {
     "eslint": "^7.5.0",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.4"
   },
   "dependencies": {
     "express": "^4.17.1"
