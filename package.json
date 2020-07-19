@@ -4,8 +4,10 @@
   "description": "A really simple blogging platform",
   "main": "server.js",
   "scripts": {
+    "start:docker": "docker-compose up",
+    "test:docker": "docker-compose run --rm api npm test",
     "dev": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test mocha 'test/**/*.spec.js'"
   },
   "repository": {
     "type": "git",
@@ -18,8 +20,11 @@
   },
   "homepage": "https://github.com/gonzavz/blog_api#readme",
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "eslint": "^7.5.0",
     "eslint-config-google": "^0.14.0",
+    "mocha": "^8.0.1",
     "nodemon": "^2.0.4"
   },
   "dependencies": {
