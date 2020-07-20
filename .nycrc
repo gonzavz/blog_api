@@ -1,0 +1,11 @@
+{
+  "reporter": [
+    "text-summary"
+  ],
+  "checkCoverage": true,
+  "branches": 55,
+  "functions": 64,
+  "lines": 79,
+  "statements": 78,
+  "include": ["src"]
+}
