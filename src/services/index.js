@@ -6,6 +6,7 @@ const {errors: celebrateErrors} = require('celebrate');
 const {mongooseErrorHandler, httpErrorHandler} = require('../error-handlers');
 
 const posts = require('./posts');
+const users = require('./users');
 
 const router = express.Router();
 // locals
@@ -22,6 +23,7 @@ router.use(bodyParser.json());
 // Mount Services
 router.get('/healthcheck', (req, res) => res.json({status: 'OK'}));
 router.use('/posts', posts);
+router.use('/users', users);
 
 router.use(mongooseErrorHandler);
 router.use(celebrateErrors());
