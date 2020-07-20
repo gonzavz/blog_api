@@ -1,6 +1,6 @@
 'use strict';
 
-const {request, app, expect} = require('../index');
+const {request, app, expect} = require('../../index');
 
 const PATH = '/healthcheck';
 

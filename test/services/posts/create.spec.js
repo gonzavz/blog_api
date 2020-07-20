@@ -1,8 +1,8 @@
 'use strict';
 
 const httpStatus = require('http-status');
-const {app, boot, cleanDB, request, expect} = require('../index');
-const {postUtils} = require('../utils');
+const {app, boot, cleanDB, request, expect, chance} = require('../../index');
+const {postUtils} = require('../../utils');
 const PATH = '/posts';
 
 describe(`POST ${PATH}`, () => {
