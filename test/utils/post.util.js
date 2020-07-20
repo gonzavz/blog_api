@@ -32,4 +32,8 @@ const generate = (attrs = {}) => {
 
 module.exports = {
   generate,
+  TAGS_MAX_LENGTH,
+  TAG_MAX_LENGTH,
+  TITLE_MAX_LENGTH,
+  BODY_MAX_LENGTH,
 };

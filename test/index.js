@@ -4,11 +4,13 @@ const app = require('../src/app');
 const db = require('../src/db');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const chaiAsPromised = require('chai-as-promised');
 const {Chance} = require('chance');
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
 
 chai.use(chaiHttp);
+chai.use(chaiAsPromised);
 
 /**
  * Performs all the operations needed to bootstrap the application.

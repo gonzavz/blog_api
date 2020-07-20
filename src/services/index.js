@@ -2,7 +2,8 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const { mongooseErrorHandler } = require('../error-handlers');
+const {errors: celebrateErrors} = require('celebrate');
+const {mongooseErrorHandler} = require('../error-handlers');
 
 const posts = require('./posts');
 
@@ -17,5 +18,5 @@ router.get('/healthcheck', (req, res) => res.json({status: 'OK'}));
 router.use('/posts', posts);
 
 router.use(mongooseErrorHandler);
-
+router.use(celebrateErrors());
 module.exports = router;
