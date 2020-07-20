@@ -43,5 +43,3 @@ const PostSchema = new Schema({
 
 PostSchema.plugin(mongoosePaginate);
 mongoose.model('Post', PostSchema);
-
-

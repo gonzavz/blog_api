@@ -7,7 +7,7 @@ const httpErrorHandler = (err, req, res, next) => { // eslint-disable-line no-un
 
   // Log the error if it is a 500.
   if (statusCode === httpStatus.INTERNAL_SERVER_ERROR) {
-    // logger.error(err.message, err.stack);
+    console.error(err.message, err.stack);
   }
 
   res.status(statusCode).json({

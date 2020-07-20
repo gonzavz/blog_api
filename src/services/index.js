@@ -7,6 +7,8 @@ const {mongooseErrorHandler, httpErrorHandler} = require('../error-handlers');
 
 const posts = require('./posts');
 const users = require('./users');
+const auth = require('./auth');
+const {authenticate} = require('./common/middlewares');
 
 const router = express.Router();
 // locals
@@ -22,8 +24,9 @@ router.use(bodyParser.json());
 
 // Mount Services
 router.get('/healthcheck', (req, res) => res.json({status: 'OK'}));
-router.use('/posts', posts);
+router.use('/posts', authenticate, posts);
 router.use('/users', users);
+router.use('/auth', auth);
 
 router.use(mongooseErrorHandler);
 router.use(celebrateErrors());

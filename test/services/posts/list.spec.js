@@ -4,16 +4,18 @@ const Promise = require('bluebird');
 const mongoose = require('mongoose');
 const _ = require('lodash');
 const {app, boot, request, cleanDB, chance, expect} = require('../../index');
-const {postUtils} = require('../../utils');
+const {postUtils, userUtils} = require('../../utils');
 const PATH = '/posts';
 
 describe(`GET ${PATH}`, () => {
   let Post;
   let posts;
+  let user;
   before(async () => {
     await boot();
     await cleanDB();
     Post = mongoose.model('Post');
+    user = await mongoose.model('User').create(userUtils.generate());
     posts = await Promise.mapSeries(
         chance.n(() => postUtils.generate(), 10),
         (post) => Post.create(post),
@@ -23,7 +25,8 @@ describe(`GET ${PATH}`, () => {
     await cleanDB();
   });
   it(`Should return ${httpStatus.OK} with posts`, async () => {
-    const {body, status} = await request(app).get(PATH);
+    const {body, status} = await request(app).get(PATH)
+        .set('Authorization', `Bearer ${user.generateToken()}`);
     expect(status).to.eql(httpStatus.OK);
     expect(body).to.be.an('object');
     expect(body).to.have.property('docs')
@@ -40,7 +43,8 @@ describe(`GET ${PATH}`, () => {
     const limit = chance.integer({min: 1, max: posts.length});
     const {body, status} = await request(app)
         .get(PATH)
-        .query({limit});
+        .query({limit})
+        .set('Authorization', `Bearer ${user.generateToken()}`);
     expect(status).to.eql(httpStatus.OK);
     expect(body).to.be.an('object');
     expect(body).to.have.property('docs')
@@ -58,7 +62,8 @@ describe(`GET ${PATH}`, () => {
     const limit = 5;
     const {body, status} = await request(app)
         .get(PATH)
-        .query({limit, offset});
+        .query({limit, offset})
+        .set('Authorization', `Bearer ${user.generateToken()}`);
     expect(status).to.eql(httpStatus.OK);
     expect(body).to.be.an('object');
     expect(body).to.have.property('docs')
@@ -81,7 +86,8 @@ describe(`GET ${PATH}`, () => {
     const sort = '-createdAt';
     const {body, status} = await request(app)
         .get(PATH)
-        .query({sort});
+        .query({sort})
+        .set('Authorization', `Bearer ${user.generateToken()}`);
     expect(status).to.eql(httpStatus.OK);
     expect(body).to.be.an('object');
     expect(body).to.have.property('docs')

@@ -1,13 +1,23 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const {jwtSecret} = require('../config');
 const createHash = require('../utils/hash');
 const {Schema} = mongoose;
 
 const UserSchema = new Schema({
-  username: String,
-  name: String,
-  password: String,
+  username: {
+    type: String,
+    trim: true,
+    unique: true,
+    required: true,
+  },
+  name: {
+    type: String,
+    trim: true,
+  },
+  password: {type: String, trim: true, required: true},
 }, {
   timestamps: true,
   collectionName: 'User',
@@ -25,5 +35,10 @@ UserSchema.pre('save', function(next) {
   next();
 });
 /* eslint-disable no-invalid-this */
+
+UserSchema.methods.generateToken = function() {
+  const token = jwt.sign({sub: this.id}, jwtSecret);
+  return token;
+};
 
 mongoose.model('User', UserSchema);

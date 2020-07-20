@@ -1,6 +1,7 @@
 'use strict';
 
 const app = require('./src/app');
+const db = require('./src/db');
 const {env, port} = require('./src/config');
 
 /**
@@ -12,6 +13,7 @@ const {env, port} = require('./src/config');
  * */
 const boot = async () => {
   console.log(`Starting app in [${env}] environment.`);
+  await db.connect();
   app.listen(port, () => console.log(`App listening on port ${port}`));
 };
 

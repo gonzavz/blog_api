@@ -1,14 +1,17 @@
 'use strict';
 
 const httpStatus = require('http-status');
+const mongoose = require('mongoose');
 const {app, boot, cleanDB, request, expect, chance} = require('../../index');
-const {postUtils} = require('../../utils');
+const {postUtils, userUtils} = require('../../utils');
 const PATH = '/posts';
 
 describe(`POST ${PATH}`, () => {
+  let user;
   before(async () => {
     await boot();
     await cleanDB();
+    user = await mongoose.model('User').create(userUtils.generate());
   });
 
   after(async () => {
@@ -18,6 +21,7 @@ describe(`POST ${PATH}`, () => {
     const postToCreate = postUtils.generate();
     const {body, status} = await request(app)
         .post(PATH)
+        .set('Authorization', `Bearer ${user.generateToken()}`)
         .send(postToCreate);
     expect(body).to.be.an('object');
     expect(status).to.eql(httpStatus.OK);
@@ -27,6 +31,7 @@ describe(`POST ${PATH}`, () => {
     const postToCreate = postUtils.generate({title: chance.word({length: postUtils.TITLE_MAX_LENGTH + 1})});
     const {body, status} = await request(app)
         .post(PATH)
+        .set('Authorization', `Bearer ${user.generateToken()}`)
         .send(postToCreate);
     expect(body).to.be.an('object');
     expect(status).to.eql(httpStatus.BAD_REQUEST);
@@ -36,6 +41,7 @@ describe(`POST ${PATH}`, () => {
     const postToCreate = postUtils.generate({body: chance.word({length: postUtils.BODY_MAX_LENGTH + 1})});
     const {body, status} = await request(app)
         .post(PATH)
+        .set('Authorization', `Bearer ${user.generateToken()}`)
         .send(postToCreate);
     expect(body).to.be.an('object');
     expect(status).to.eql(httpStatus.BAD_REQUEST);
@@ -45,6 +51,7 @@ describe(`POST ${PATH}`, () => {
     const postToCreate = postUtils.generate({tags: chance.word({length: postUtils.BODY_MAX_LENGTH + 1})});
     const {body, status} = await request(app)
         .post(PATH)
+        .set('Authorization', `Bearer ${user.generateToken()}`)
         .send(postToCreate);
     expect(body).to.be.an('object');
     expect(status).to.eql(httpStatus.BAD_REQUEST);
@@ -55,6 +62,7 @@ describe(`POST ${PATH}`, () => {
     postToCreate[chance.guid()] = chance.guid();
     const {body, status} = await request(app)
         .post(PATH)
+        .set('Authorization', `Bearer ${user.generateToken()}`)
         .send(postToCreate);
     expect(body).to.be.an('object');
     expect(status).to.eql(httpStatus.BAD_REQUEST);
