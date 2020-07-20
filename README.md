@@ -12,7 +12,10 @@ RESTful API for manage a Blog.
 - Docker
 
 ## Setup
-
+We use node 12.18.*, if you have installed nvm we recommend run the following command to set the correct node version.
+```bash
+$ nvm install && nvm use
+```
 ```bash
 $ git clone git@github.com:gonzavz/blog_api.git
 $ cd blog_api
