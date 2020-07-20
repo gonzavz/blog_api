@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const {BODY_MAX_LENGTH, TITLE_MAX_LENGTH, TAG_MAX_LENGTH, TAGS_MAX_LENGTH} = require('./Post.constants');
 const {Schema} = mongoose;
@@ -26,7 +27,7 @@ const PostSchema = new Schema({
     }],
     validate: [{
       validator(value) {
-        return value.length < TAGS_MAX_LENGTH;
+        return value.length <= TAGS_MAX_LENGTH;
       },
       msg: 'Post can have at most 20 tags',
     }],
@@ -40,6 +41,7 @@ const PostSchema = new Schema({
   collectionName: 'Post',
 });
 
+PostSchema.plugin(mongoosePaginate);
 mongoose.model('Post', PostSchema);
 
 

@@ -1,8 +1,8 @@
-'use strict'
+'use strict';
 
 const httpStatus = require('http-status');
 
-const httpErrorHandler = (err, req, res, next) => { // eslint-disable-line no-unused-vars
+const httpErrorHandler = (err, req, res, next) => { // eslint-disable-line no-unused-vars, max-len
   const statusCode = err.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
 
   // Log the error if it is a 500.
