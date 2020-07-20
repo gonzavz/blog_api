@@ -3,11 +3,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const {errors: celebrateErrors} = require('celebrate');
-const {mongooseErrorHandler} = require('../error-handlers');
+const {mongooseErrorHandler, httpErrorHandler} = require('../error-handlers');
 
 const posts = require('./posts');
 
 const router = express.Router();
+// locals
+router.use((req, res, next) => {
+  req.locals = {};
+  res.locals = {};
+  next();
+});
 
 // Configure body parser
 router.use(bodyParser.urlencoded({extended: true}));
@@ -19,4 +25,6 @@ router.use('/posts', posts);
 
 router.use(mongooseErrorHandler);
 router.use(celebrateErrors());
+router.use(httpErrorHandler);
+
 module.exports = router;

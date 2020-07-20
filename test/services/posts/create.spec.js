@@ -57,7 +57,6 @@ describe(`POST ${PATH}`, () => {
         .post(PATH)
         .send(postToCreate);
     expect(body).to.be.an('object');
-    console.log(body);
     expect(status).to.eql(httpStatus.BAD_REQUEST);
   });
 });

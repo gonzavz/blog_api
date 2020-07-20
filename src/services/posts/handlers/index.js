@@ -1,5 +1,6 @@
 'use strict';
 
 const create = require('./create');
+const remove = require('./remove');
 
-module.exports = {create};
+module.exports = {create, remove};
